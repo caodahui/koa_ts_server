@@ -14,11 +14,10 @@ export default class UserController {
   }
 
   public static async listUsersBySql(ctx: Context) {
-    // const userRepository = getManager().getRepository(User);
-    // const rawData = await userRepository.query('SELECT * FROM USER');
-    // ctx.status = 200;
-    // ctx.body = { code: '9999', data: rawData, msg: '成功' };
-    ctx.throw(400, 'new Error')
+    const userRepository = getManager().getRepository(User);
+    const rawData = await userRepository.query('SELECT * FROM USER');
+    ctx.status = 200;
+    ctx.body = { code: '9999', data: rawData, msg: '成功' };
   }
 
   public static async showUserDetail(ctx: Context) {
