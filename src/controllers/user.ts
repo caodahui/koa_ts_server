@@ -1,14 +1,16 @@
 import { Context } from 'koa';
 import { getManager } from 'typeorm';
+import { NotFoundException, ForbiddenException } from '../middleware/exceptions';
 // import { ResponseModal } from '../utils/types';
 
 import { User } from '../entity/user';
+import { logger } from '../middleware/logger';
 
 export default class UserController {
+
   public static async listUsers(ctx: Context) {
     const userRepository = getManager().getRepository(User);
     const users = await userRepository.find();
-
     ctx.status = 200;
     ctx.body = { code: '9999', data: users, msg: '成功' };
   }
@@ -23,12 +25,11 @@ export default class UserController {
   public static async showUserDetail(ctx: Context) {
     const userRepository = getManager().getRepository(User);
     const user = await userRepository.findOne(+ctx.params.id);
-
+    ctx.status = 200;
     if (user) {
-      ctx.status = 200;
       ctx.body = { code: '9999', data: user, msg: '成功' };
     } else {
-      ctx.status = 404;
+      ctx.body = { code: '500', data: {}, msg: '无此用户' };
     }
   }
 
@@ -58,6 +59,10 @@ export default class UserController {
     await userRepository.save(ctx.request.body);
 
     ctx.status = 200;
-    ctx.body = { code: '9999', data: newUser, msg: '成功' };
+    if (newUser) {
+      ctx.body = { code: '9999', data: newUser, msg: '成功' };
+    } else {
+      ctx.body = { code: '500', data: {}, msg: '添加失败' };
+    }
   }
 }
