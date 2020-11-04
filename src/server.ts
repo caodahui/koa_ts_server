@@ -3,8 +3,27 @@ import cors from '@koa/cors';
 import bodyParser from 'koa-bodyparser';
 import { createConnection } from 'typeorm';
 import 'reflect-metadata';
-import { logger } from './middleware/logger';
+import { loggerWare } from './middleware/logger';
 import router from './routes';
+
+
+// var mqtt = require('mqtt')
+// var client  = mqtt.connect('mqtt://test.mosquitto.org')
+//
+// client.on('connect', function () {
+//   client.subscribe('presence', function (err) {
+//     if (!err) {
+//       client.publish('presence', 'Hello mqtt')
+//     }
+//   })
+// })
+
+// client.on('message', function (topic, message) {
+//   // message is Buffer
+//   console.log(message.toString())
+//   client.end()
+// })
+
 
 // 初始化 Koa 应用实例
 const app = new Koa();
@@ -15,7 +34,7 @@ createConnection()
     const app = new Koa();
 
     // 注册中间件
-    app.use(logger());
+    app.use(loggerWare());
     app.use(cors());
     app.use(bodyParser());  //解析请求参数
 
@@ -36,7 +55,6 @@ createConnection()
     // 运行服务器
     app.listen(3000, () => {
       console.log('Service started at http://localhost:3000');
-      console.log(process.env.NODE_ENV);
     });
   })
   .catch((err: string) => console.log('TypeORM connection error:', err));

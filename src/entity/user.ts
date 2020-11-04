@@ -16,4 +16,7 @@ export class User {
 
   @Column({ comment: '头衔' })
   title: string;
+
+  @Column({ comment: '111' })
+  aaa: string;
 }

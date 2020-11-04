@@ -30,6 +30,7 @@
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.3.0",
     "log4js": "^6.3.0",
+    "mqtt": "^4.2.4",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.28"

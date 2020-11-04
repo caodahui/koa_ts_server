@@ -4,7 +4,7 @@ import { NotFoundException, ForbiddenException } from '../middleware/exceptions'
 // import { ResponseModal } from '../utils/types';
 
 import { User } from '../entity/user';
-import { logger } from '../middleware/logger';
+import { loggerWare } from '../middleware/logger';
 
 export default class UserController {
 
